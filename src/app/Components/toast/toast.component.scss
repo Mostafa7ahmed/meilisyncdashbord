@@ -1,0 +1,109 @@
+.card {
+    height: 80px;
+    border-radius: 8px;
+    box-sizing: border-box;
+    padding: 10px 15px;
+    background-color: #ffffff;
+    box-shadow: rgba(216, 224, 231, 0.2) 0px 8px 24px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    position: fixed;
+    z-index: 55888;
+    top: 20px;
+    left: 20px;
+    animation: slideIn 0.5s ease forwards;  
+    transition: 2s all ease-in-out;
+    max-width: 450px;
+
+
+  }
+  
+  .card.hide {
+    animation: slideOut 0.5s ease forwards; 
+  }
+  
+  @keyframes slideIn {
+    0% {
+      opacity: 0;
+      transform: translateY(-50%);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes slideOut {
+    0% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-50%);
+    }
+  }
+  .wave {
+    position: absolute;
+    transform: rotate(90deg);
+    left: -43px;
+    top: 37px;
+    width: 110px;
+    fill:#fc0c0cb7
+  }
+.iconerror{
+    display: flex;
+    align-items: center;
+    padding: 12px !important;
+
+    background: #F5F5F5 !important;
+    border-radius: 6px;
+    
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px;
+}
+.iconerror i {
+    border: 3px solid ;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    padding: 5px;
+    color: #fc0c0cb7;
+}
+.message{
+    width: 90%;
+    padding: 10px;
+
+
+}
+.message p{
+    color: #fc0c0cb7;
+    text-wrap: wrap;
+    padding-right: 20px;
+
+}
+
+.closeToast{
+    top: 10px;
+    right: 10px;
+    background: #B1B1B1C2;
+    padding: 5px;
+    color: #F5F5F5;
+    border-radius: 50px;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+.closeToast i{
+    font-size: 15px;
+}
+
+
+
