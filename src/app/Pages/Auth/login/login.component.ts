@@ -18,7 +18,9 @@ export class LoginComponent {
 
   isloading: boolean = false;
   message: string = "";
-  
+  toastMessage: string = '';
+  toastColor: string = '';
+  showToast: boolean = false;
   constructor(private _AuthService: AuthService, private toastService: ToastService , private Router:Router) { }
 
   siginForm: FormGroup = new FormGroup({
@@ -43,13 +45,16 @@ export class LoginComponent {
           localStorage.setItem("TokenMelie", res.result.token);
           localStorage.setItem("userId", res.result.userId);
           this.message = res.message;
-          this.Router.navigate(['./home'])
+          this.Router.navigate(['./home']);
+  
+          
         }
       },
       (error) => {
         this.isloading = false;
         this.message = error.error.message;
-        this.toastService.showToast(this.message, "#fc0c0cb7", false);
+        this.showToast=true;
+        this.toastMessage= this.message
       }
     );
   }

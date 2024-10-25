@@ -66,6 +66,7 @@
   </div>
 
 
-  <app-toast ></app-toast>
-
+  <div *ngIf="showToast">
+    <app-toast [colorfill]="toastColor" [message]="toastMessage" [isTrue]="showToast"></app-toast>
+  </div>
 </div>

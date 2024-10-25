@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ToastService } from '../../Core/Service/toast.service';
 
 @Component({
@@ -10,23 +10,23 @@ import { ToastService } from '../../Core/Service/toast.service';
   styleUrls: ['./toast.component.scss']
 })
 export class ToastComponent {
-  showToast: boolean = false;
-  message: string = "";
-  colorfill: string = "";
-  isSuccess: boolean = false;
 
-  constructor(private toastService: ToastService) {}
+     
+
+  @Input() colorfill: string = "";
+  @Input() message: string = "Error Message"; // تأكد من أن اسم الخاصية هو "message" وليس "Message"
+  @Input() isTrue: boolean = false;
+
+  showToast: boolean = false;
 
   ngOnInit(): void {
-    this.toastService.toast$.subscribe((toast) => {
-      this.message = toast.message;
-      this.colorfill = toast.color;
-      this.isSuccess = toast.isTrue;
+    if (this.isTrue) {
       this.showToast = true;
+
       setTimeout(() => {
-        this.hideToast();
-      }, 5000);
-    });
+        this.showToast = false;
+      }, 3000); 
+    }
   }
 
   hideToast() {

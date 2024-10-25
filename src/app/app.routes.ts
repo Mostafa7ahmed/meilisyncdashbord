@@ -12,7 +12,16 @@ export const routes: Routes = [
         component: RoutsComponent,
         canActivate: [guardGuard], 
         children: [
-            { path: "home", component: HomeComponent }
+            { path: "home", title: 'Home', loadComponent:()=>import("./Pages/home/home.component") .then(m=>m.HomeComponent) },
+            {path:"meilisearch" , title: 'meilisearch', loadComponent:()=>import("./Pages/mielesearch/mielesearch.component") .then(m=>m.MielesearchComponent)},
+            {path:"source" , title: 'source', loadComponent:()=>import("./Pages/source/source.component") .then(m=>m.SourceComponent)},
+
+            {path:"sync" , title: 'sync', loadComponent:()=>import("./Pages/mielesearch/mielesearch.component") .then(m=>m.MielesearchComponent)},
+
+            {path:"user" , title: 'user', loadComponent:()=>import("./Pages/mielesearch/mielesearch.component") .then(m=>m.MielesearchComponent)},
+
+            {path:"" , pathMatch:"full" , redirectTo:"home"}
+
         ]
     }
 ];
