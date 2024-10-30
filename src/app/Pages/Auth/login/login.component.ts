@@ -1,4 +1,3 @@
-import { ToastService } from './../../../Core/Service/toast.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from './../../../Core/Service/auth.service';
 import { Component } from '@angular/core';
@@ -21,7 +20,7 @@ export class LoginComponent {
   toastMessage: string = '';
   toastColor: string = '';
   showToast: boolean = false;
-  constructor(private _AuthService: AuthService, private toastService: ToastService , private Router:Router) { }
+  constructor(private _AuthService: AuthService,  private Router:Router) { }
 
   siginForm: FormGroup = new FormGroup({
     email: new FormControl(null, [

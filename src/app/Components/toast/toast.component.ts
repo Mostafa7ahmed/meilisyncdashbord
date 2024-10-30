@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
-import { ToastService } from '../../Core/Service/toast.service';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-toast',
@@ -9,12 +8,12 @@ import { ToastService } from '../../Core/Service/toast.service';
   templateUrl: './toast.component.html',
   styleUrls: ['./toast.component.scss']
 })
-export class ToastComponent {
+export class ToastComponent implements OnInit  {
 
      
 
   @Input() colorfill: string = "";
-  @Input() message: string = "Error Message"; // تأكد من أن اسم الخاصية هو "message" وليس "Message"
+  @Input() message: string = "Error Message"; 
   @Input() isTrue: boolean = false;
 
   showToast: boolean = false;

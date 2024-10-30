@@ -1,9 +1,9 @@
 
-/* You can add global styles to this file, and also import other style files */
 :root {
   --pink: #CC59CD;
   --white: #fff;
   --gray: #f5f5f5;
+  --colorTable:#FEF6FE;
 
 }
 
@@ -13,3 +13,52 @@
   }
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.swal2-icon-success .toasttitle{
+  color: #CC59CD;
+}
+.swal2-icon-error .toasttitle{
+  color: #f27474;
+}
+
+.swal2-popup.swal2-toast .swal2-title {
+  margin:0 !important;
+
+  text-align: left !important;
+  margin-top: 8px !important;
+}
+
+div:where(.swal2-icon).swal2-success .swal2-success-ring {
+
+  border: .25em solid #cb59cd54 !important;
+}
+
+div:where(.swal2-icon).swal2-success [class^=swal2-success-line] {
+  background-color: #CC59CD !important;
+}
+
+div:where(.swal2-container).swal2-top-start>.swal2-popup {
+  justify-content: space-evenly !important;
+}
+
+/* dashboard.component.scss */
+
+.loading-spinner {
+  text-align: center;
+}
+
+.loading-spinner p {
+  font-size: 18px;
+  color: #333;
+}
+
+/* Optionally, you can use an animated spinner */
+.loading-spinner::before {
+  content: "";
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #CC59CD;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}

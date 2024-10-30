@@ -7,7 +7,6 @@
   background-color: var(--pink);
   width: 330px;
   height: 100vh;
-  z-index: 11111;
   /* margin: 30px; */
   display: flex;
   align-items: self-end;
@@ -35,7 +34,6 @@
   list-style: none;
   border-top-left-radius: 30px;
   border-bottom-left-radius: 30px;
-  z-index: 222555;
 }
 
 .nav ul li a {
@@ -47,7 +45,6 @@
   align-items: center;
   padding-left: 15px;
   transition: .05s color ease-in;
-  z-index: 2224555;
 }
 
 .nav ul li a .icon {

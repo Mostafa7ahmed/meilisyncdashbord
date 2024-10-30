@@ -1,0 +1,246 @@
+.topTable .search {
+  width: 230px;
+  position: relative;
+}
+.topTable .search input {
+  width: 100%;
+  position: relative;
+  padding: 10px;
+  background: #efeff0;
+  border-radius: 10px;
+  outline: none;
+  border: none;
+}
+
+.search i {
+  position: absolute;
+  top: 15px;
+  right: 10px;
+}
+
+.form-control:focus {
+  box-shadow: none;
+  border: none;
+}
+
+.topTable .btnadd {
+  padding: 6px 20px;
+  background-color: var(--pink);
+  color: var(--white);
+}
+thead,
+tbody,
+tfoot,
+tr,
+td,
+th {
+  border-color: inherit;
+  border-style: solid;
+  border-width: 0;
+}
+
+th,
+tr,
+td {
+  padding: 15px;
+  text-align: center;
+}
+th {
+  background-color: #efeff0;
+  font-weight: 500;
+}
+.btnAction {
+  margin-right: 15px;
+  border: none;
+  outline: none;
+  color: var(--pink);
+}
+
+.btnAction:focus {
+  color: var(--pink);
+}
+tr.odd td {
+  background-color: var(--colorTable);
+}
+.isEmpty {
+  padding: 20px;
+  font-weight: 600;
+
+  color: var(--pink);
+}
+
+/* Popup modal styling */
+.popup {
+  width: 394px;
+  height: fit-content;
+  position: fixed;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -50%);
+  background: white;
+  border-radius: 12px;
+  padding: 20px 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: opacity 0.5s ease-in-out;
+  display: none; /* Hidden by default */
+
+  z-index: 4748844999;
+}
+
+.popup.show {
+    display: block; /* Show the popup */
+  }
+  .popup.editPop{
+    display: block; /* Show the popup */
+
+  }
+.close-icon {
+  cursor: pointer;
+  background: #3c3c4369;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+}
+.close-icon i {
+  font-weight: 600;
+  font-size: 15px;
+  color: #fff;
+}
+.add h6 {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 16.94px;
+  color: var(--pink);
+}
+
+/* Overlay styling */
+.overlay {
+  background-color: rgba(0, 0, 0, 0.25);
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  transition: opacity 0.5s ease-in-out;
+
+  z-index: 474884999;
+}
+
+.relative {
+  position: relative;
+}
+
+#label-input {
+  transition: all 0.1s ease-in-out;
+  position: absolute;
+  top: 30%;
+  left: 18px;
+  transform: scale(0.95);
+  opacity: 1;
+  pointer-events: none;
+  color: #5f5d5dee;
+}
+
+.input-base {
+  border-radius: 6px;
+}
+
+#input:focus ~ label#label-input,
+#input:not(:placeholder-shown) ~ #label-input {
+  top: -27% !important;
+  left: 4px !important;
+  transform: scale(0.8);
+  background: white;
+  color: #b417a4;
+  padding: 0px 18px;
+  opacity: 1;
+}
+
+#input {
+  transition: outline 0.2s ease;
+  font-size: 1rem;
+  outline-color: var(--button-text);
+  outline: unset;
+  border: 1px solid #b417a4;
+  padding: 17px 10px 10px 17px;
+  width: 100%;
+}
+
+.btnAdd {
+  padding:14px 32px;
+  gap: 10px;
+  border-radius: 8px;
+  border: none;
+  color: var(--white);
+  background-color: var(--pink);
+}
+.btncancel{
+    border: 1px solid var(--pink);
+    background-color: transparent;
+    color: var(--pink);
+
+}
+
+
+form .btnAdd:disabled {
+    background-color: #b417a447;
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+
+
+//   pagination
+.paginationItem{
+    position: absolute;
+    right: 20px;
+    bottom: 8px;
+    width: 399px;
+
+}
+
+.paginationItem .RoutePagination{
+    background: #7676801F !important;
+
+}
+.RoutePagination{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 7px 18px !important;
+
+}
+
+.limit {
+    padding: 8px;
+    border-radius: 4px;
+    background-color: transparent;
+    border: none;
+    color: #333;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+  
+    &:hover {
+      background-color: #e6e6e6;
+    }
+  
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 2px #e068d4;
+      border-color: #b417a4;
+    }
+  
+    option {
+      padding: 5px;
+      color: #333;
+    }
+  }
+
+
+  .infoPaggiantion button{
+    border: none;
+    outline: none;
+    background-color: transparent;
+  }

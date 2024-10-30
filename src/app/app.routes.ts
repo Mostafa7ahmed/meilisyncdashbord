@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './Pages/Auth/login/login.component';
-import { HomeComponent } from './Pages/home/home.component';
 import { RoutsComponent } from './Pages/routs/routs.component';
 import { guardGuard } from './Core/Guards/guard.guard';
 
@@ -16,9 +15,9 @@ export const routes: Routes = [
             {path:"meilisearch" , title: 'meilisearch', loadComponent:()=>import("./Pages/mielesearch/mielesearch.component") .then(m=>m.MielesearchComponent)},
             {path:"source" , title: 'source', loadComponent:()=>import("./Pages/source/source.component") .then(m=>m.SourceComponent)},
 
-            {path:"sync" , title: 'sync', loadComponent:()=>import("./Pages/mielesearch/mielesearch.component") .then(m=>m.MielesearchComponent)},
+            {path:"sync" , title: 'sync', loadComponent:()=>import("./Pages/sync/sync.component") .then(m=>m.SyncComponent)},
 
-            {path:"user" , title: 'user', loadComponent:()=>import("./Pages/mielesearch/mielesearch.component") .then(m=>m.MielesearchComponent)},
+            {path:"user" , title: 'user', loadComponent:()=>import("./Pages/user/user.component") .then(m=>m.UserComponent)},
 
             {path:"" , pathMatch:"full" , redirectTo:"home"}
 
