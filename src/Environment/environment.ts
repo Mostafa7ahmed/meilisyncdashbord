@@ -4,5 +4,6 @@ export const environment = {
     meilisearchRoute: '/meilisearch',
     syncRoute: '/sync',
     sourceRoute: '/source',
-    loginRoute:"/user/login"
+    loginRoute:"/user/login",
+    roleRoute:"/role"
   };

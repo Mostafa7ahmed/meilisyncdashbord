@@ -1,1 +1,234 @@
-<p>source works!</p>
+<div class="Melie p-3  position-relative">
+
+    <div class="topTable d-flex justify-content-between align-items-center pt-2 mb-5">
+      <div class="search">
+        <input type="text" class="form-control" id="search" placeholder="Search"       [(ngModel)]="search"
+        (input)="searchSource()">
+        <i class="fa fa-search " aria-hidden="true"></i>
+      </div>
+  
+  
+      <button type="button" class="btnadd btn" (click)="togglePopup()">Add Source</button>
+  
+  
+    </div>
+  
+    <div class=" shadow-sm rounded-2 ">
+  
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Label</th>
+            <th>URL</th>
+            <th>Database</th>
+            <th>Created On</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+         @if(!loading){
+          
+          @for ( item of sourceData; track $index) {
+            <tr [ngClass]="{ 'odd': $odd}">
+              <td>{{ item.label }}</td>
+              <td>{{ item.url }}</td>
+              <td>{{ item.database }}</td>
+
+              <td>{{ item.createdOn | date: 'yyyy-MM-dd' }}</td>
+              <td>
+                <button class="btn btnAction" (click)="editSource(item.id)">
+                  <i class="fa-solid fa-pen-to-square"></i>
+                </button>
+                <button class="btn btnAction" (click)="deleteSource(item.id)">
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+    
+    
+              </td>
+            </tr>
+            }
+    
+            @empty {
+            <tr class=" text-center">
+              <td colspan="5" class=" text-center ">
+                <img src="isempty.png" alt="" width="350" height="350" loading="lazy">
+              </td>
+              
+            </tr>
+            <tr class=" text-center">
+              <td colspan="5" class=" text-center isEmpty">
+                 No Element No
+              </td>
+              
+            </tr>
+            }
+    
+         }
+  
+         <tr *ngIf="loading" class=" text-center ">
+           <td  colspan="5" class=" text-center "><div class="loading-spinner my-5"></div></td>
+         </tr>
+        </tbody>
+      </table>
+  
+     @if(sourceData.length >0){
+      <div class="paggiantion py-4  my-5   position-relative ">
+        
+        <div class="paginationItem p-2  d-flex  gap-4 justify-content-between">
+  
+          <div class="RoutePagination p-3 flex-grow-1 rounded-3">
+            <select class="limit " id="limit" (change)="onLimitChange($event)">
+              <option value="5" selected>5</option>
+              <option *ngFor="let limit of limits" [value]="limit">{{ limit }}</option>
+            </select>
+  
+  
+            <div class="infoPages">
+               <p class=" mb-0">{{currentPage}} of {{totalPages}}</p>
+            </div>
+          </div>
+           <div class="infoPaggiantion p-3  d-flex gap-4 ">
+            
+            <button [disabled]="!movePrevious"> <i class="fa  fa-angle-left"  (click)="changePage(currentPage - 1)"  aria-hidden="true"></i></button>
+              <button  [disabled]="!movenext"> <i class="fa  fa-angle-right"  (click)="changePage(currentPage + 1)"  aria-hidden="true"></i> </button>
+             
+           </div>
+  
+        </div>
+      </div>
+  
+     }
+  
+  
+    </div>
+  
+  
+  
+    <!-- Show Add Model -->
+  
+  
+    <div #popupAdd class="popup p-4 bg-body rounded-4 shadow ">
+  
+      <!-- Close Icon -->
+      <div class="add mb-4 p-1 d-flex align-items-baseline justify-content-between">
+        <h6> Add Melie </h6>
+        <div class="close-icon" (click)="togglePopup()">
+          <i class="fa fa-close" aria-hidden="true"></i>
+        </div>
+      </div>
+      <form class="inputs" (ngSubmit)="addSource(sourceForm)" [formGroup]="sourceForm">
+        <!-- Lable Input -->
+        <div class="position-relative">
+          <input class="input-cal input-base" id="input" placeholder="" type="text" formControlName="label">
+          <label id="label-input">Label</label>
+        </div>
+  
+        <!-- URL Input -->
+  
+        <div class="position-relative my-3">
+          <input class="input-cal input-base" id="input" placeholder="" type="text" formControlName="url">
+          <label id="label-input">URL</label>
+        </div>
+  
+  
+        <!-- API Key Input -->
+  
+        <div class="position-relative">
+          <input class="input-cal input-base" id="input" placeholder="" type="text" formControlName="database">
+          <label id="label-input">Database</label>
+        </div>
+  
+        <div class="mt-5 btns d-flex  gap-4 align-items-sm-center justify-content-around">
+          <!-- Submit Button -->
+        
+          <button type="button" class="btnAdd btncancel" (click)="togglePopup()">No, cancel </button>
+  
+  
+          <button class="btnAdd" [disabled]="!sourceForm.valid || isloading">
+            @if (!isloading) {
+            <span>Yes , Add</span>
+            }
+            @if (isloading) {
+            <span>Yes , Add...</span>
+            }
+          </button>
+  
+        </div>
+      </form>
+  
+    </div>
+  
+  
+  
+  
+     <!-- Popup Edit -->
+  
+     <div #popupEdit class="popup p-4 bg-body rounded-4 shadow ">
+  
+      <!-- Close Icon -->
+      <div class="add mb-4 p-1 d-flex align-items-baseline justify-content-between">
+        <h6>Edit Source</h6>
+        <div class="close-icon" (click)="togglePopupEdit()">
+          <i class="fa fa-close" aria-hidden="true"></i>
+        </div>
+      </div>
+      <form class="inputs" (ngSubmit)="updateSource()" [formGroup]="editsource">
+        <!-- Lable Input -->
+        <div class="position-relative">
+          <input class="input-cal input-base" id="input" placeholder="" type="text" formControlName="label">
+          <label id="label-input">Label</label>
+        </div>
+  
+        <!-- URL Input -->
+  
+        <div class="position-relative my-3">
+          <input class="input-cal input-base" id="input" placeholder="" type="text" formControlName="url">
+          <label id="label-input">URL</label>
+        </div>
+  
+  
+        <!-- API Key Input -->
+  
+        <div class="position-relative">
+          <input class="input-cal input-base" id="input" placeholder="" type="text" formControlName="database">
+          <label id="label-input">Database</label>
+        </div>
+  
+        <div class="mt-5 btns d-flex  gap-4 align-items-sm-center justify-content-around">
+          <!-- Submit Button -->
+        
+          <button type="button" class="btnAdd btncancel" (click)="togglePopupEdit()">No, cancel </button>
+  
+  
+          <button class="btnAdd" [disabled]="!editsource.valid || isloading">
+            @if (!isloading) {
+            <span>Yes , Update</span>
+            }
+            @if (isloading) {
+            <span>Yes , Update...</span>
+            }
+          </button>
+  
+        </div>
+      </form>
+  
+    </div>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    <!-- Show toast -->
+  
+  
+  </div>

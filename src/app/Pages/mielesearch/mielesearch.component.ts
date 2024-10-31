@@ -170,14 +170,7 @@ export class MielesearchComponent implements OnInit, OnDestroy {
     }
   }
   
-  EditMeili(data: FormGroup): void {
-    this.isloading = true;
-    if (data.valid) {
-      this.isloading = false;
-     this.togglePopup();
-      this._toast.showToast("success" ,"Done")
-    }
-  }
+
 
 
   private handleAddSuccess(res: Meilesearch, data: FormGroup): void {

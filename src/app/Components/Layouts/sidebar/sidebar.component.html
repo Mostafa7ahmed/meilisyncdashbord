@@ -1,52 +1,55 @@
-<div class="sidebar">
-    <div class="nav">
+<div class="sidebar" [ngClass]="{'collapsed': isCollapsed}">
 
-        <div class="logo mb-5">
-            <a  routerLink=""  routerLinkActive="hovered" [routerLinkActiveOptions]="{exact:true}">
+  <div class="arrow position-absolute p-3 " (click)="toggleSidebar()">
+    <i class="fa-solid fa-arrow-right fs-3 " [ngClass]="{'fa-rotate-180': !isCollapsed}"></i>
+    <!-- <img src="left-arrow 2.png" alt=""  [ngClass]="{'fa-rotate-180': !isCollapsed}"> -->
 
+  </div>
 
-                <img src="LogoMelie.png" alt="" width="100">
-            </a>
-        </div>
-        <ul>
-            <li>
-              <a routerLink="meilisearch"  routerLinkActive="hovered" [routerLinkActiveOptions]="{exact:true}">
-                <span class="icon"><i class="fas fa-tachometer-alt"></i></span> <!-- Dashboard icon -->
-                <span class="title">Meilisearch</span>
-              </a>
-            </li>
+  <div class="nav" [ngClass]="{'collapsed': isCollapsed}">
 
-            <li>
-                <a routerLink="source" routerLinkActive="hovered"  [routerLinkActiveOptions]="{exact:true}">
-                  <span class="icon"><i class="fas fa-envelope"></i></span> <!-- Messages icon -->
-                  <span class="title">Source</span>
-                </a>
-              </li>
-        
-            <li>
-              <a routerLink="sync" routerLinkActive="hovered" [routerLinkActiveOptions]="{exact:true}">
-                <span class="icon"><i class="fas fa-users"></i></span> <!-- Customers icon -->
-                <span class="title">Asyn</span>
-              </a>
-            </li>
-
-            <li>
-                <a routerLink="user" routerLinkActive="hovered" [routerLinkActiveOptions]="{exact:true}">
-                  <span class="icon"><i class="fas fa-users"></i></span> <!-- Customers icon -->
-                  <span class="title">User</span>
-                </a>
-              </li>
-  
-      
-        
-            <li>
-              <a routerLink="" routerLinkActive="hovered" [routerLinkActiveOptions]="{exact:true}">
-                <span class="icon"><i class="fas fa-sign-out-alt"></i></span> 
-                <span class="title">Sign Out</span>
-              </a>
-            </li>
-          </ul>
+    <div class="logo my-5">
 
     </div>
-    
+    <ul>
+      <li>
+        <a routerLink="meilisearch" routerLinkActive="hovered" [routerLinkActiveOptions]="{exact:true}">
+          <span class="icon"><i class="fas fa-tachometer-alt"></i></span> <!-- Dashboard icon -->
+          <span class="title">Meilisearch</span>
+        </a>
+      </li>
+
+      <li>
+        <a routerLink="source" routerLinkActive="hovered" [routerLinkActiveOptions]="{exact:true}">
+          <span class="icon"><i class="fas fa-envelope"></i></span> <!-- Messages icon -->
+          <span class="title">Source</span>
+        </a>
+      </li>
+
+      <li>
+        <a routerLink="sync" routerLinkActive="hovered" [routerLinkActiveOptions]="{exact:true}">
+          <span class="icon"><i class="fas fa-users"></i></span> <!-- Customers icon -->
+          <span class="title">Asyn</span>
+        </a>
+      </li>
+
+      <li>
+        <a routerLink="user" routerLinkActive="hovered" [routerLinkActiveOptions]="{exact:true}">
+          <span class="icon"><i class="fas fa-users"></i></span> <!-- Customers icon -->
+          <span class="title">User</span>
+        </a>
+      </li>
+
+
+
+      <li>
+        <a routerLink="" routerLinkActive="hovered" [routerLinkActiveOptions]="{exact:true}">
+          <span class="icon"><i class="fas fa-sign-out-alt"></i></span>
+          <span class="title">Sign Out</span>
+        </a>
+      </li>
+    </ul>
+
+  </div>
+
 </div>
