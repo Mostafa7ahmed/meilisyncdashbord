@@ -5,5 +5,7 @@ export const environment = {
     syncRoute: '/sync',
     sourceRoute: '/source',
     loginRoute:"/user/login",
-    roleRoute:"/role"
+    roleRoute:"/role",
+    userRoute:"/user"
+
   };

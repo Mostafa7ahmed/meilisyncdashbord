@@ -5,15 +5,16 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class GlobalcrudService<T> {
-  token :string =JSON.stringify(localStorage.getItem('TokenMelie') )
+  token  =localStorage.getItem('TokenMelie')
 
   constructor(private _HttpClient: HttpClient) {}
 
-  getAll(url: string, numpage: number = 1, pageSize: number = 10, search: string): Observable<T[]> {
+  getAll(url: string, numpage?: number , pageSize?: number , search?: string): Observable<T[]> {
     return this._HttpClient.get<T[]>(`${url}/paginate?pageNumber=${numpage}&pageSize=${pageSize}&search=${search}`,{
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${this.token}`      }
+        Authorization: `Bearer ${this.token}` 
+         }
    } );
   }
 

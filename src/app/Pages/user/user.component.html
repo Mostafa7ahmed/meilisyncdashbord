@@ -1,13 +1,156 @@
-<div class="Melie p-3  position-relative">
-    <div class="topTable d-flex justify-content-between align-items-center pt-2 mb-5">
-        <div class="search">
-          <input type="text" class="form-control" id="search" placeholder="Search"   >
-          <i class="fa fa-search " aria-hidden="true"></i>
+<div class="User p-3  position-relative">
+
+  <div class="topTable d-flex justify-content-between align-items-center pt-2 mb-5">
+    <div class="search">
+      <input type="text" class="form-control" id="search" placeholder="Search"       [(ngModel)]="search"
+      (input)="searchMeili()">
+      <i class="fa fa-search " aria-hidden="true"></i>
+    </div>
+
+
+    <button type="button" class="btnadd btn" (click)="togglePopup()">Add User</button>
+
+
+  </div>
+
+  <div class=" shadow-sm rounded-2 ">
+
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>UserName</th>
+          <th>Email</th>
+          <th>Created On</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+       @if(!loading){
+        
+        @for ( item of userData; track $index) {
+          <tr [ngClass]="{ 'odd': $odd}">
+            <td>{{ item.name }}</td>
+            <td>{{ item.userName }}</td>
+            <td>{{ item.email }}</td>
+            <td>{{ item.createdOn | date: 'yyyy-MM-dd' }}</td>
+            <td>
+              <button class="btn btnAction" (click)="editUser(item.id)">
+                <i class="fa-solid fa-pen-to-square"></i>
+              </button>
+              <button class="btn btnAction" (click)="deleteMeili(item.id)">
+                <i class="fa-solid fa-trash"></i>
+              </button>
+  
+  
+            </td>
+          </tr>
+          }
+  
+          @empty {
+          <tr class=" text-center">
+            <td colspan="5" class=" text-center ">
+              <img src="isempty.png" alt="" width="350" height="350" loading="lazy">
+            </td>
+            
+          </tr>
+          <tr class=" text-center">
+            <td colspan="5" class=" text-center isEmpty">
+               No Element No
+            </td>
+            
+          </tr>
+          }
+  
+       }
+
+       <tr *ngIf="loading" class=" text-center ">
+         <td  colspan="5" class=" text-center "><div class="loading-spinner my-5"></div></td>
+       </tr>
+      </tbody>
+    </table>
+
+   @if(userData.length >0){
+    <div class="paggiantion py-4  my-5   position-relative ">
+      
+      <div class="paginationItem p-2  d-flex  gap-4 justify-content-between">
+
+        <div class="RoutePagination p-3 flex-grow-1 rounded-3">
+          <select class="limit " id="limit" (change)="onLimitChange($event)">
+            <option value="5" selected>5</option>
+            <option *ngFor="let limit of limits" [value]="limit">{{ limit }}</option>
+          </select>
+
+
+          <div class="infoPages">
+             <p class=" mb-0">{{currentPage}} of {{totalPages}}</p>
+          </div>
         </div>
-    
-    
-        <button type="button" class="btnadd btn" >Add Source</button>
-    
-    
+         <div class="infoPaggiantion p-3  d-flex gap-4 ">
+          
+          <button [disabled]="!movePrevious"> <i class="fa  fa-angle-left"  (click)="changePage(currentPage - 1)"  aria-hidden="true"></i></button>
+            <button  [disabled]="!movenext"> <i class="fa  fa-angle-right"  (click)="changePage(currentPage + 1)"  aria-hidden="true"></i> </button>
+           
+         </div>
+
       </div>
+    </div>
+
+   }
+
+
+  </div>
+
+
+
+  <!-- Show Add Model -->
+
+
+  <div #popupAdd class="popup p-4 bg-body rounded-4 shadow ">
+
+    <!-- Close Icon -->
+    <div class="add mb-4 p-1 d-flex align-items-baseline justify-content-between">
+      <h6> Add User</h6>
+      <div class="close-icon" (click)="togglePopup()">
+        <i class="fa fa-close" aria-hidden="true"></i>
+      </div>
+    </div>
+
+
+  </div>
+
+
+
+
+   <!-- Popup Edit -->
+
+   <div #popupEdit class="popup p-4 bg-body rounded-4 shadow ">
+
+    <!-- Close Icon -->
+    <div class="add mb-4 p-1 d-flex align-items-baseline justify-content-between">
+      <h6>Edit  User</h6>
+      <div class="close-icon" (click)="togglePopupEdit()">
+        <i class="fa fa-close" aria-hidden="true"></i>
+      </div>
+    </div>
+ 
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- Show toast -->
+
+
 </div>

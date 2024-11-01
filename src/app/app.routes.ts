@@ -1,3 +1,4 @@
+import { RoleComponent } from './Pages/role/role.component';
 import { Routes } from '@angular/router';
 import { LoginComponent } from './Pages/Auth/login/login.component';
 import { RoutsComponent } from './Pages/routs/routs.component';
@@ -17,7 +18,7 @@ export const routes: Routes = [
 
             {path:"sync" , title: 'sync', loadComponent:()=>import("./Pages/sync/sync.component") .then(m=>m.SyncComponent)},
 
-            {path:"user" , title: 'user', loadComponent:()=>import("./Pages/user/user.component") .then(m=>m.UserComponent)},
+            {path:"setting" , title: 'Setting', loadComponent:()=>import("./Pages/role/role.component") .then(m=>m.RoleComponent)},
 
             {path:"" , pathMatch:"full" , redirectTo:"home"}
 

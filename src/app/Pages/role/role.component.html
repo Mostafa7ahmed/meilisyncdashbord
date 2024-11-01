@@ -1,0 +1,73 @@
+<div class="Melie p-3  position-relative">
+    <div class="topTable d-flex justify-content-between align-items-center pt-2 mb-3">
+        <div class="search">
+          <input type="text" class="form-control" id="search" placeholder="Search"    
+           [(ngModel)]="search"
+          (input)="searchRole()" >
+          <i class="fa fa-search " aria-hidden="true"></i>
+        </div>
+    
+    
+        <button type="button" class="btnadd btn" >Add Role</button>
+    
+    
+      </div>
+
+      
+      <div class="scroll px-3 p-4 mb-5">
+         <div class="roles  " #rolesContainer>
+          <button class="scroll-left" #leftArrow 
+            (mouseenter)="startScrolling('left')" 
+            (mouseleave)="stopScrolling()"><i class="fa-solid fa-chevron-left"></i>
+         </button>
+            
+            <div class="role d-flex">
+
+               
+           @if (isloading) {
+            <div class=" text-center  d-flex align-items-center justify-content-center loading">
+               
+               <div class="loading-spinner my-5 text-center"></div>
+           </div>
+           }
+             @if(!isloading){
+               @for (item of roleData; track item.id) {
+
+                  <div class="roleItem p-4">
+                     <h5>{{item.name}}</h5>
+                     <p>{{item.createdOn | date: 'yyyy-MM-dd' }}</p>
+                  </div>
+            
+                   
+                 }
+
+                 @empty {
+                   
+                  <div class="notFound">
+                        
+                     <p>Not Found</p>
+                     
+                   </div>
+               
+                }
+              }
+              
+            </div>
+          <button class="scroll-right" #rightArrow 
+            (mouseenter)="startScrolling('right')" 
+            (mouseleave)="stopScrolling()">
+            <i class="fa-solid fa-chevron-right"></i>
+         </button>
+         </div>
+      </div>
+
+
+      <app-user></app-user>
+
+</div>
+
+
+
+<!-- <div class="">
+
+</div> -->
