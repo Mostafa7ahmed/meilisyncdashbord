@@ -1,68 +1,139 @@
 <div class="Melie p-3  position-relative">
-    <div class="topTable d-flex justify-content-between align-items-center pt-2 mb-3">
-        <div class="search">
-          <input type="text" class="form-control" id="search" placeholder="Search"    
-           [(ngModel)]="search"
-          (input)="searchRole()" >
-          <i class="fa fa-search " aria-hidden="true"></i>
+  <div class="topTable d-flex justify-content-between align-items-center pt-2 mb-3">
+    <div class="search">
+      <input type="text" class="form-control" id="search" placeholder="Search" [(ngModel)]="search"
+        (input)="searchRole()">
+      <i class="fa fa-search " aria-hidden="true"></i>
+    </div>
+
+
+    <button type="button" class="btnadd btn" (click)="togglePopup()">Add Role</button>
+
+
+  </div>
+
+
+  <div class="scroll px-3 p-4 mb-5">
+    <div class="roles  " #rolesContainer>
+      <button class="scroll-left" #leftArrow (mouseenter)="startScrolling('left')" (mouseleave)="stopScrolling()"><i
+          class="fa-solid fa-chevron-left"></i>
+      </button>
+
+      <div class="role d-flex">
+
+
+        @if (isloading) {
+        <div class=" text-center  d-flex align-items-center justify-content-center loading">
+
+          <div class="loading-spinner my-5 text-center"></div>
         </div>
-    
-    
-        <button type="button" class="btnadd btn" >Add Role</button>
-    
-    
-      </div>
+        }
+        @if(!isloading){
+        @for (item of roleData; track item.id) {
 
-      
-      <div class="scroll px-3 p-4 mb-5">
-         <div class="roles  " #rolesContainer>
-          <button class="scroll-left" #leftArrow 
-            (mouseenter)="startScrolling('left')" 
-            (mouseleave)="stopScrolling()"><i class="fa-solid fa-chevron-left"></i>
-         </button>
-            
-            <div class="role d-flex">
-
-               
-           @if (isloading) {
-            <div class=" text-center  d-flex align-items-center justify-content-center loading">
-               
-               <div class="loading-spinner my-5 text-center"></div>
-           </div>
-           }
-             @if(!isloading){
-               @for (item of roleData; track item.id) {
-
-                  <div class="roleItem p-4">
-                     <h5>{{item.name}}</h5>
-                     <p>{{item.createdOn | date: 'yyyy-MM-dd' }}</p>
-                  </div>
-            
-                   
-                 }
-
-                 @empty {
-                   
-                  <div class="notFound">
-                        
-                     <p>Not Found</p>
-                     
-                   </div>
-               
-                }
-              }
-              
+        <div class="roleItem p-4">
+          <div class="d-flex gap-3 align-items-center  mb-3">
+            <div [style.background-color]="item.color" class="p-2 rounded-circle shadow-sm d-flex align-items-center justify-content-center">
+              <img src="role.png" alt="" width="20px">
             </div>
-          <button class="scroll-right" #rightArrow 
-            (mouseenter)="startScrolling('right')" 
-            (mouseleave)="stopScrolling()">
-            <i class="fa-solid fa-chevron-right"></i>
-         </button>
-         </div>
+            <h5>{{item.name}}</h5>
+ 
+          </div>
+
+           <p>{{item.createdOn | date: 'yyyy-MM-dd' }}</p>
+       
+        </div>
+
+
+        }
+
+        @empty {
+
+        <div class="notFound">
+
+          <p>Not Found</p>
+
+        </div>
+
+        }
+        }
+
+      </div>
+      <button class="scroll-right" #rightArrow (mouseenter)="startScrolling('right')" (mouseleave)="stopScrolling()">
+        <i class="fa-solid fa-chevron-right"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Add Role -->
+  <div #popupAdd class="popup p-4 bg-body rounded-4 shadow ">
+
+    <!-- Close Icon -->
+    <div class="add mb-4 p-1 d-flex align-items-baseline justify-content-between">
+      <h6> Add User</h6>
+      <div class="close-icon" (click)="togglePopup()">
+        <i class="fa fa-close" aria-hidden="true"></i>
+      </div>
+    </div>
+
+
+    <form  (ngSubmit)="addRole(roleForm)" [formGroup]="roleForm">
+      <div class="d-flex mb-3 justify-content-between gap-3 p-1 ">
+
+        <div class="Inputs">
+          <div class="position-relative mb-3">
+            <input class="input-cal input-base" id="input" placeholder="" type="text"  formControlName="name">
+            <label id="label-input">Name</label>
+          </div>
+
+          <div class="mb-3">
+            <label for="RoleColor" class="form-label">Select Color</label>
+            <input type="color" class="form-control" id="RoleColor"   formControlName="color" [(ngModel)]="selectedColor"
+              name="color">
+          </div>
+
+
+        </div>
+
+        <div [style.background-color]="selectedColor" class="p-3 rounded-2 shadow-sm">
+          <img src="role.png" alt="" width="150px">
+        </div>
+
       </div>
 
 
-      <app-user></app-user>
+      <div class="d-flex gap-3 justify-content-between">
+
+        <button type="button" class="btnAdd btncancel w-50" (click)="togglePopup()">No, cancel </button>
+
+
+        <button class="btnAdd w-50" type="submit"  [disabled]="!roleForm.valid || isloading">
+          @if (!isloading) {
+          <span>Yes , Add</span>
+          }
+          @if (isloading) {
+          <span>Yes , Add...</span>
+          }
+        </button>
+
+      </div>
+    </form>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <app-user></app-user>
 
 </div>
 

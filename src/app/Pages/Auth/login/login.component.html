@@ -1,5 +1,5 @@
 <div class="login ">
-  <form class="rightSide w-50 ms-4" (ngSubmit)="Sigin(siginForm)" [formGroup]="siginForm">
+  <form class="rightSide w-50 ms-4" (ngSubmit)="signIn(signInForm)" [formGroup]="signInForm">
     <p>Welcome Back, Please login to your account</p>
 
     <!-- Email Input -->
@@ -7,12 +7,12 @@
       <label for="email" class="form-label fw-medium ms-1">Email</label>
       <input type="email" class="form-control py-2" id="email" placeholder="Enter Your Email" formControlName="email">
 
-      @if (siginForm.get('email')?.errors && siginForm.get('email')?.touched) {
+      @if (signInForm.get('email')?.errors && signInForm.get('email')?.touched) {
         <div class="text-danger mt-1">
-          @if (siginForm.get('email')?.errors?.['required']) {
+          @if (signInForm.get('email')?.errors?.['required']) {
             <span class="m-0">Email is required</span>
           }
-          @if (siginForm.get('email')?.errors?.['email']) {
+          @if (signInForm.get('email')?.errors?.['email']) {
             <span class="m-0">Email is not valid</span>
           }
         </div>
@@ -27,15 +27,15 @@
         <i class="fa-solid fa-eye position-absolute"></i>
       </div>
 
-      @if (siginForm.get('password')?.errors && siginForm.get('password')?.touched) {
+      @if (signInForm.get('password')?.errors && signInForm.get('password')?.touched) {
         <div class="text-danger">
-          @if (siginForm.get('password')?.errors?.['required']) {
+          @if (signInForm.get('password')?.errors?.['required']) {
             <span class="mb-0">Password is required</span>
           }
-          @if (siginForm.get('password')?.errors?.["minlength"]) {
+          @if (signInForm.get('password')?.errors?.["minlength"]) {
             <span class="mb-0">Password must be at least 6 characters</span>
           }
-          @if (siginForm.get('password')?.errors?.["maxlength"]) {
+          @if (signInForm.get('password')?.errors?.["maxlength"]) {
             <span class="mb-0">Password cannot be more than 20 characters</span>
           }
 
@@ -46,14 +46,14 @@
     </div>
 
     <!-- Submit Button -->
-    <button class="btnRegster btn" [disabled]="!siginForm.valid || isloading">
-      @if (!isloading) {
+    <button class="btnRegster btn" [disabled]="!signInForm.valid || isLoading" type="submit">
+      @if (!isLoading) {
         <span>Sign In</span>
       }
-      @if (isloading) {
+      @if (isLoading) {
         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
       }
-      @if (isloading) {
+      @if (isLoading) {
         <span>Sign In ...</span>
       }
     </button>

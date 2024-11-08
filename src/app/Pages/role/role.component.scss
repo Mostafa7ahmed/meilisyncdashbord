@@ -71,7 +71,7 @@ tr.odd td {
 
 /* Popup modal styling */
 .popup {
-  width: 394px;
+  width: fit-content;
   height: fit-content;
   position: fixed;
   left: 50%;
@@ -85,6 +85,14 @@ tr.odd td {
   display: none; /* Hidden by default */
 
   z-index: 4748844999;
+}
+.Inputs input[type="color"]{
+
+  inline-size: 93px;
+  padding: 0;
+  border: -24px;
+  border-radius: 10px;
+  height: 49px;
 }
 
 .popup.show {

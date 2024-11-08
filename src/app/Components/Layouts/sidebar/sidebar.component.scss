@@ -1,32 +1,32 @@
 .sidebar {
-  width: 300px;
+  width: 228px;
   height: 100vh;
   position: relative;
   transition: width 0.8s ease; 
+  border-radius: 15px;
+
+
 
 }
 .nav {
   position: fixed;
   background-color: var(--pink);
-  width: 300px;
+  width: 200px;
   height: 100vh;
-  /* margin: 30px; */
-  display: flex;
-  align-items: self-end;
   padding: 0;
-  flex-direction: column;
   overflow: hidden;
   padding: 20px 0 20px 0;
-  transition: width 0.8s ease; 
+  transition: width 0.8s ease;
+  display: flex;
+  align-items: center;
+  box-shadow: 20px 0px 1px #cb59cd33;
+  border-radius: 0 21px 12px 0;
+  border-collapse: collapse;
 
 }
-.nav .logo {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
+
 .nav ul {
-  width: 80%;
+  width: 100%;
   padding: 0;
   margin: 0;
   list-style: none;
@@ -36,9 +36,21 @@
   margin-bottom: 20px;
   position: relative;
   width: 100%;
-  list-style: none;
-  border-top-left-radius: 30px;
-  border-bottom-left-radius: 30px;
+  padding-left: 20px;
+  transition: 1s ease-in margin;
+
+
+}
+
+.nav.collapsed ul li {
+  margin-bottom: 40px;
+  position: relative;
+  width: 100%;
+  padding-left: 10px;
+  transition: 1s ease-in margin;
+
+
+
 }
 
 .nav ul li a {
@@ -48,8 +60,8 @@
   text-decoration: none;
   color: var(--white);
   align-items: center;
-  padding-left: 15px;
   transition: .05s color ease-in;
+  text-wrap:nowrap;
 }
 
 .nav ul li a .icon {
@@ -59,45 +71,87 @@
   height: 60px;
   line-height: 60px;
   text-align: center;
+  transition: all 0.8s ease;
+
+}
+.nav.collapsed ul li a .icon {
+  min-width: 30px;
+
+  transition: all 1s ease-in;
+
 }
 .nav ul li a.hovered {
     background-color: var(--white);
     list-style: none;
-    border-top-left-radius: 30px;
-    border-bottom-left-radius: 30px;
     color: var(--pink);
 
 }
-.nav ul li a.hovered::before {
+.nav.collapsed ul li a .icon{
+  margin: 0 30px 0 13px;
+  transition: all 1s ease-out;
+}
+.nav ul li a .collapsedTitle{
+  opacity: 0;
+
+}
+.nav.collapsed ul li a .collapsedTitle{
+  position: absolute;
+  top: -37px;
+  left: 2px;
+  background: #EFEFF0;
+   padding: 2px; 
+  font-size: 10px;
+  width: 60px;
+  padding: 5px ;
+  font-weight: 400;
+  color: #0c0d19;
+  opacity: 0;
+  text-align: center;
+
+  transition: 1s opacity ease-in-out;
+
+}
+.nav.collapsed ul li a .collapsedTitle::after{
   content: "";
   position: absolute;
-  right: 0;
-  top: -50px;
-  width: 50px;
-  height: 50px;
-  background-color: transparent;
-  border-radius: 50%;
-  box-shadow: 35px 35px 0 10px var(--white);
-  pointer-events: none;
+  bottom: -18px;
+  left: 35%;
+
+  border: transparent;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid #EFEFF0;
 }
-.nav ul li a.hovered::after {
-  content: "";
-  position: absolute;
-  right: 0;
-  bottom: -50px;
-  width: 50px;
-  height: 50px;
-  background-color: transparent;
-  border-radius: 50%;
-  box-shadow: 35px -35px 0 10px var(--white);
-  pointer-events: none;
+
+.nav.collapsed ul li:hover  a .collapsedTitle{
+  opacity: 1;
+  transition: 1s opacity ease-in-out;
 }
+.nav ul li a:hover:not(.hovered){
+  background-color: #ffffff3a;
+  transition: .8s background-color ease-in-out;
+  
+  
+}
+.nav ul li a.hovered .icon img{
+  background: var(--pink);
+  padding: 04px;
+  border-radius: 5px;
+}
+
 .collapsed{
-  width: 92px !important;
+  width: 74px !important;
   transition: width 0.8s ease;
 
 }
 
+.sidebar.collapsed{
+  width: 98px !important;
+  transition: .8s ease-in width;
+}
 .arrow {
   transition: transform 0.3s ease; 
   z-index: 447;
@@ -112,9 +166,7 @@
 
   background: linear-gradient(90deg, rgb(247, 133, 226) 0%, hsla(275, 19%, 88%, 1) 100%);
   
-  background: -moz-linear-gradient(90deg, rgb(253, 142, 233) 0%, hsla(275, 19%, 88%, 1) 100%);
   
-  background: -webkit-linear-gradient(90deg, rgb(234, 72, 205) 0%, hsla(275, 19%, 88%, 1) 100%);
   
 }
 

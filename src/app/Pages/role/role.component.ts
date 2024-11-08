@@ -1,16 +1,16 @@
+import { UserComponent } from './../user/user.component';
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ToastesService } from '../../Core/Service/toastes.service';
 import { RoleService } from '../../Core/Service/role.service';
 import { IRole } from '../../Core/Interfaces/irole';
 import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { UserComponent } from "../user/user.component";
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-role',
   standalone: true,
-  imports: [CommonModule, FormsModule, UserComponent],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule , UserComponent],
   templateUrl: './role.component.html',
   styleUrls: ['./role.component.scss']
 })
@@ -23,6 +23,8 @@ export class RoleComponent implements OnDestroy ,OnInit {
   @ViewChild('rolesContainer') rolesContainer!: ElementRef; 
   @ViewChild('leftArrow') leftArrow!: ElementRef; 
   @ViewChild('rightArrow') rightArrow!: ElementRef;
+  selectedColor: string = '#CC59CD'; 
+
   startScrolling(direction: 'left' | 'right'): void {
     const scrollStep = direction === 'left' ? -this.scrollAmount : this.scrollAmount;
 
@@ -63,15 +65,27 @@ export class RoleComponent implements OnDestroy ,OnInit {
   movePrevious :boolean=false;
   totalPagesArray: number[] = [];
   unsub: Subscription | undefined;
-  pageSize = 5;
+  pageSize = 10;
   search = '';
   isloading:boolean = false;
-  constructor(private meilisearchService: RoleService , private _toast:ToastesService , ) {}
+  constructor(private roleservice: RoleService , private _toast:ToastesService , ) {}
 
- 
+  roleForm = this.createFormGroup();
+  
+  private createFormGroup(): FormGroup {
+    return new FormGroup({
+      name: new FormControl(null, Validators.required),
+      color: new FormControl(null, Validators.required),
+
+
+
+    });
+  }
+
+
   getData(page: number = this.currentPage): void {
     this.isloading= true;
-    this.unsub = this.meilisearchService .getAll(page, this.pageSize, this.search)
+    this.unsub = this.roleservice.getAll(page, this.pageSize, this.search)
       .subscribe({
         next: (res) => {
           this.roleData=res.items
@@ -88,6 +102,56 @@ export class RoleComponent implements OnDestroy ,OnInit {
     this.currentPage = 1;
     this.getData(this.currentPage);
   }
+
+
+  addRole(data: FormGroup): void {
+    this.isloading = true;
+    this.roleservice.addRole(data.value).subscribe({
+      next: (res) => {
+        this.handleAddSuccess(data);
+        this.isloading = false;
+        this.togglePopup();
+        this._toast.showToast("success" , res.message)
+        this.getData(this.currentPage);
+      },
+      error: (err) =>{
+        console.log(err)
+        this._toast.showToast("error" , err.message)
+        this.isloading = false;
+
+      },
+    });
+  }
+  
+
+
+
+  private handleAddSuccess(data: FormGroup): void {
+    data.reset();
+  }
+
+
+
+
+
+
+
+
+
+
+    // Popup
+    @ViewChild('popupAdd') popupAdd: ElementRef | undefined;
+    
+    togglePopup() {
+      if (this.popupAdd) {
+        this.popupAdd.nativeElement.classList.toggle('show');
+      }
+  
+      
+    }
+
+
+
 
 
   ngOnInit(): void {

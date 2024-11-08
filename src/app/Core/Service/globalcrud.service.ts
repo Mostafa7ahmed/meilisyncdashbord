@@ -38,7 +38,8 @@ export class GlobalcrudService<T> {
     return this._HttpClient.post<T>(url, data, {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${this.token}`      }
+        Authorization: `Bearer ${this.token}`    
+        }
     });
   }
 

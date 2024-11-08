@@ -3,12 +3,13 @@ import { AuthService } from '../Service/auth.service';
 import { inject } from '@angular/core';
 
 export const guardGuard: CanActivateFn = (route, state) => {
-  const _AuthService = inject(AuthService);
-  const _Router = inject(Router);
+  const authService = inject(AuthService);
+  const router = inject(Router);
 
-  if (_AuthService.currentUser.getValue() !== null) { return true; }
-  else {
-    _Router.navigate(['/loghomein'])
-    return false;
+  if (authService.currentUser.getValue() !== null) {
+    return true;
   }
+  
+  router.navigate(['/login']);
+  return false;
 };

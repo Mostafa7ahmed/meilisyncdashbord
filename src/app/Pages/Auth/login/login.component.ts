@@ -1,10 +1,9 @@
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from './../../../Core/Service/auth.service';
-import { Component } from '@angular/core';
-import { ToastComponent } from "../../../Components/toast/toast.component";
+import { ToastComponent } from '../../../Components/toast/toast.component';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
-
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -14,15 +13,15 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
+  isLoading = false;
+  message = '';
+  toastMessage = '';
+  toastColor = '';
+  showToast = false;
 
-  isloading: boolean = false;
-  message: string = "";
-  toastMessage: string = '';
-  toastColor: string = '';
-  showToast: boolean = false;
-  constructor(private _AuthService: AuthService,  private Router:Router) { }
+  constructor(private authService: AuthService, private _Router: Router) {}
 
-  siginForm: FormGroup = new FormGroup({
+  signInForm: FormGroup = new FormGroup({
     email: new FormControl(null, [
       Validators.required,
       Validators.email
@@ -34,28 +33,25 @@ export class LoginComponent {
     ]),
   });
 
-  Sigin(formInfo: FormGroup) {
-    this.isloading = true;
+  signIn(formInfo: FormGroup) {
+    this.isLoading = true;
 
-    this._AuthService.Signin(formInfo.value).subscribe(
+    this.authService.Signin(formInfo.value).subscribe(
       (res) => {
-        this.isloading = false;
-        if (res.success) {
-          localStorage.setItem("TokenMelie", res.result.token);
-          localStorage.setItem("userId", res.result.userId);
-          this.message = res.message;
-          this.Router.navigate(['./home']);
-  
-          
+        if(res.success){
+        localStorage.setItem('TokenMelie', res.result.token);
+        localStorage.setItem('userId', res.result.userId);
+        this.isLoading = false;
+        this._Router.navigate(['/meilisearch']);
         }
+
       },
       (error) => {
-        this.isloading = false;
+        this.isLoading = false;
         this.message = error.error.message;
-        this.showToast=true;
-        this.toastMessage= this.message
+        this.showToast = true;
+        this.toastMessage = this.message;
       }
     );
   }
-
 }

@@ -1,27 +1,28 @@
-import { RoleComponent } from './Pages/role/role.component';
 import { Routes } from '@angular/router';
 import { LoginComponent } from './Pages/Auth/login/login.component';
 import { RoutsComponent } from './Pages/routs/routs.component';
+import { MielesearchComponent } from './Pages/mielesearch/mielesearch.component';
 import { guardGuard } from './Core/Guards/guard.guard';
+import { NotfoundComponent } from './Components/notfound/notfound.component';
 
 export const routes: Routes = [
-    { path: "loghomein", component: LoginComponent },
-  
-    {
-        path: "",
-        component: RoutsComponent,
-        canActivate: [guardGuard], 
-        children: [
-            { path: "home", title: 'Home', loadComponent:()=>import("./Pages/home/home.component") .then(m=>m.HomeComponent) },
-            {path:"meilisearch" , title: 'meilisearch', loadComponent:()=>import("./Pages/mielesearch/mielesearch.component") .then(m=>m.MielesearchComponent)},
-            {path:"source" , title: 'source', loadComponent:()=>import("./Pages/source/source.component") .then(m=>m.SourceComponent)},
+    { path: '', redirectTo: 'meilisearch', pathMatch: 'full' },
 
-            {path:"sync" , title: 'sync', loadComponent:()=>import("./Pages/sync/sync.component") .then(m=>m.SyncComponent)},
+  { path: "login", title:"Login",component: LoginComponent },
 
-            {path:"setting" , title: 'Setting', loadComponent:()=>import("./Pages/role/role.component") .then(m=>m.RoleComponent)},
+  {
+    path: "",
+    canActivate: [guardGuard],
+    component: RoutsComponent,
+    children: [
+      { path: "meilisearch", title: 'MeiliSearch', component: MielesearchComponent },
+      { path: "source", title: 'Source', loadComponent: () => import('./Pages/source/source.component').then(m => m.SourceComponent) },
+      { path: "sync", title: 'Sync', loadComponent: () => import('./Pages/sync/sync.component').then(m => m.SyncComponent) },
+      { path: "setting", title: 'Settings', loadComponent: () => import('./Pages/role/role.component').then(m => m.RoleComponent) },
+      { path: '**', component: NotfoundComponent }
 
-            {path:"" , pathMatch:"full" , redirectTo:"home"}
+    ]
+  },
+  { path: '**', component: NotfoundComponent }
 
-        ]
-    }
 ];

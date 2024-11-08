@@ -1,3 +1,4 @@
+import { RoleService } from './../../Core/Service/role.service';
 import { ToastesService } from './../../Core/Service/toastes.service';
 import { CommonModule } from '@angular/common';
 import {
@@ -18,6 +19,7 @@ import { Subscription } from 'rxjs';
 import { Meilesearch } from '../../Core/Interfaces/meilesearch';
 import { Iuser } from '../../Core/Interfaces/iuser';
 import { UserService } from '../../Core/Service/user.service';
+import { IRole } from '../../Core/Interfaces/irole';
 
 @Component({
   selector: 'app-user',
@@ -28,6 +30,8 @@ import { UserService } from '../../Core/Service/user.service';
 })
 export class UserComponent implements OnDestroy ,OnInit {
   userData: Iuser[] = [];
+  roleData: IRole[] = [];
+
   currentPage = 1;
   totalPages = 1;
   movenext :boolean=true;
@@ -36,29 +40,25 @@ export class UserComponent implements OnDestroy ,OnInit {
   unsub: Subscription | undefined;
   pageSize = 5;
   search = '';
-  meilForm = this.createFormGroup();
-  editmelie = this.createEditFormGroup();
+  userForm = this.createFormGroup();
   isloading: boolean = false;
   limits = [10, 20, 40 , 80, 100];
   loading:boolean=false;
-  constructor(private _userService: UserService , private _toast:ToastesService , ) {}
+  constructor(private _userService: UserService , private _toast:ToastesService ,private roleservice:RoleService ) {}
 
   private createFormGroup(): FormGroup {
     return new FormGroup({
       name: new FormControl(null, Validators.required),
       userName: new FormControl(null, Validators.required),
       email: new FormControl(null, Validators.required),
+      password: new FormControl(null, Validators.required),
+      confirmedPassword: new FormControl(null, Validators.required),
+      roleIds: new FormControl(null, Validators.required),
+
+
     });
   }
 
-  private createEditFormGroup(): FormGroup {
-    return new FormGroup({
-      id: new FormControl(''),
-      name: new FormControl('', Validators.required),
-      userName: new FormControl('', Validators.required),
-      email: new FormControl('', Validators.required),
-    });
-  }
 
   getData(page: number = this.currentPage): void {
     this.loading = true;
@@ -95,19 +95,6 @@ export class UserComponent implements OnDestroy ,OnInit {
     );
   }
 
-  editUser(id: string): void {
-
-    this.togglePopupEdit();
-    this._userService.getUserById(id).subscribe({
-      next: (res) =>{ 
-        this.populateEditForm(res.result)
-        
-
-      },
-      error: (err) =>   this._toast.showToast("error" , err.error.message)
-      ,
-    });
-  }
 
   onLimitChange(event: any): void {
     this.pageSize = +event.target.value;
@@ -115,33 +102,9 @@ export class UserComponent implements OnDestroy ,OnInit {
     this.getData(this.currentPage);
   }
 
-  private populateEditForm(data: Meilesearch): void {
-    this.editmelie.setValue({
-      id: data.id,
-      label: data.label,
-      url: data.url,
-      apiKey: data.apiKey,
-    });
-  }
 
-  updateUser(): void {
-    this.isloading = true;
 
-    if (this.editmelie.valid) {
-      this._userService.updateUser(this.editmelie.value).subscribe({
-        next: (res) => {
-          this.handleUpdateSuccess(res);
-          this.isloading = false;
-          this.togglePopupEdit();
-          this._toast.showToast("success" , res.message)
-          this.getData(this.currentPage);
-        },
-        error: (err) =>{
-          this._toast.showToast("error" , err.error.message)
 
-        },      });
-    }
-  }
 
   private handleUpdateSuccess(res: Iuser): void {
     this.isloading = true;
@@ -152,34 +115,33 @@ export class UserComponent implements OnDestroy ,OnInit {
     }
   }
 
-  addMeili(data: FormGroup): void {
+  adduserFub(data: FormGroup): void {
     this.isloading = true;
-    if (data.valid) {
-      this._userService.addUser(data.value).subscribe({
-        next: (res) => {
-          this.handleAddSuccess(res, data);
-          this.isloading = false;
-          this.togglePopup();
-          this._toast.showToast("success" , res.message)
-          this.getData(this.currentPage);
-        },
-        error: (err) =>{
-          this._toast.showToast("error" , err.error.message)
-          this.isloading = false;
+    this._userService.addUser(data.value).subscribe({
+      next: (res) => {
+        this.handleAddSuccess(data);
+        this.isloading = false;
+        this.togglePopup();
+        this._toast.showToast("success" , res.message)
+        this.getData(this.currentPage);
+      },
+      error: (err) =>{
+        console.log(err)
+        this._toast.showToast("error" , err.message)
+        this.isloading = false;
 
-        },
-      });
-    }
+      },
+    });
   }
   
 
 
 
-  private handleAddSuccess(res: Meilesearch, data: FormGroup): void {
+  private handleAddSuccess(data: FormGroup): void {
     data.reset();
   }
 
-  deleteMeili(id: string): void {
+  deleteUser(id: string): void {
     
     this._userService.deleteUser(id).subscribe({
       next: (res) => {
@@ -212,7 +174,8 @@ export class UserComponent implements OnDestroy ,OnInit {
     if (this.popupAdd) {
       this.popupAdd.nativeElement.classList.toggle('show');
     }
-    
+    this.getDataRole();
+
   }
   
   togglePopupEdit() {
@@ -220,6 +183,21 @@ export class UserComponent implements OnDestroy ,OnInit {
       this.popupEdit.nativeElement.classList.toggle('editPop');
     }
   }
+
+  
+  getDataRole(page: number = this.currentPage): void {
+    this.isloading= true;
+    this.unsub = this.roleservice.getAll(page,20, this.search)
+      .subscribe({
+        next: (res) => {
+          this.roleData=res.items
+          this.isloading= false
+          console.log(res)
+        },
+        error: (err) => console.error('Error fetching data:', err),
+      });
+  }
+
 
   ngOnInit(): void {
     this.getData();

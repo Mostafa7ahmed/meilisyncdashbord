@@ -35,10 +35,10 @@
             <td>{{ item.email }}</td>
             <td>{{ item.createdOn | date: 'yyyy-MM-dd' }}</td>
             <td>
-              <button class="btn btnAction" (click)="editUser(item.id)">
+              <button class="btn btnAction">
                 <i class="fa-solid fa-pen-to-square"></i>
               </button>
-              <button class="btn btnAction" (click)="deleteMeili(item.id)">
+              <button class="btn btnAction" (click)="deleteUser(item.id)">
                 <i class="fa-solid fa-trash"></i>
               </button>
   
@@ -115,6 +115,75 @@
         <i class="fa fa-close" aria-hidden="true"></i>
       </div>
     </div>
+
+   <form class="row w-100" (ngSubmit)="adduserFub(userForm)" [formGroup]="userForm">
+   
+   
+        <div class="col-6 mb-3">
+          <div class="position-relative mb-3">
+            <input class="input-cal input-base" id="input" placeholder="" type="text" formControlName="name">
+            <label id="label-input">Name</label>
+          </div>
+          <div class="position-relative mb-3">
+            <input class="input-cal input-base" id="input" placeholder="" type="text" formControlName="userName">
+            <label id="label-input">User name</label>
+          </div>
+          <div class="position-relative mb-3">
+            <input class="input-cal input-base" id="input" placeholder="" type="text" formControlName="email">
+            <label id="label-input">Email</label>
+          </div>
+        </div>
+        <div class="col-6 mb-3">
+          <div class="imageUser w-100 col-12 d-flex justify-content-end">
+          <img src="user.png" alt="" width="250px" >
+          </div>
+        </div>
+        <div class="col-6 mb-3 ">
+            
+          <div class="position-relative mb-3 col-12">
+            <input class="input-cal input-base" id="input" placeholder="" type="text" formControlName="password">
+            <label id="label-input">Password</label>
+          </div>
+        </div>
+
+        <div class="col-6 mb-3 ">
+          <div class="position-relative mb-3 col-12">
+                <input class="input-cal input-base" id="input" placeholder="" type="text" formControlName="confirmedPassword">
+                <label id="label-input">Confirm password</label>
+              </div>
+         </div>
+         <div class="form-group col-12 mb-5">
+          <label for="sourceDropdown">Select Role</label>
+          <select class="form-control" formControlName="roleIds" id="sourceDropdown">
+            <option value="">Select a Source</option>
+            @for (role of roleData; track role.id) {
+              <option [value]="role.id">{{ role.name }}</option>
+            }
+
+          </select>
+        </div>
+
+         <div class="d-flex gap-3 justify-content-between">
+        
+          <button type="button" class="btnAdd btncancel col-6" (click)="togglePopup()">No, cancel </button>
+  
+  
+          <button class="btnAdd col-6"  type="submit"  [disabled]="!userForm.valid || isloading">
+            @if (!isloading) {
+            <span>Yes , Add</span>
+            }
+            @if (isloading) {
+            <span>Yes , Add...</span>
+            }
+          </button>
+  
+        </div>
+        
+
+   
+
+
+   </form>
 
 
   </div>

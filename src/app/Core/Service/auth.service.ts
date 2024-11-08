@@ -10,28 +10,30 @@ import {  Router } from '@angular/router';
   providedIn: 'root'
 })
 export class AuthService {
+  currentUser = new BehaviorSubject(null);
 
   constructor(private _HttpClient:HttpClient , private _Router:Router) { 
     if (localStorage.getItem('TokenMelie') !== null) {
       this.saveCurrentUser();
     }
   }
-  currentUser = new BehaviorSubject(null);
 
   saveCurrentUser() {
     const token = localStorage.getItem('TokenMelie');
-    if (token) {
-      this.currentUser.next(jwtDecode(token));
+    if (token != null) {
+      const decoded:any = jwtDecode(token);
+      this.currentUser.next(decoded)
+
     }
   }
 
-  checkToken() {
-    const token: any = localStorage.getItem('TokenMelie');
-    const decodedToken = jwtDecode(token);
-    if (decodedToken.exp! < Date.now() / 1000) {
-      this.logout()
-    }
-  }
+  // checkToken() {
+  //   const token: any = localStorage.getItem('TokenMelie');
+  //   const decodedToken = jwtDecode(token);
+  //   if (decodedToken.exp! < Date.now() / 1000) {
+  //     this.logout()
+  //   }
+  // }
 
 
   Signin(user: SignIn):Observable<any>{
@@ -45,7 +47,7 @@ export class AuthService {
   logout() {
     localStorage.removeItem('TokenMelie');
     this.currentUser.next(null);
-    this._Router.navigate(['/loghomein'])
+    this._Router.navigate(['/login'])
   }
  
 }
